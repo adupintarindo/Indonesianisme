@@ -741,7 +741,6 @@ export default function ProgramPage() {
               style={{
                 padding: '14px 28px',
                 borderRadius: '9999px',
-                border: 'none',
                 cursor: 'pointer',
                 fontWeight: '600',
                 fontSize: '15px',
@@ -822,7 +821,6 @@ export default function ProgramPage() {
                     style={{
                       padding: '8px 16px',
                       borderRadius: '9999px',
-                      border: 'none',
                       cursor: 'pointer',
                       fontWeight: '600',
                       fontSize: '13px',
