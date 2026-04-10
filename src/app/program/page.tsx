@@ -616,257 +616,180 @@ export default function ProgramPage() {
       />
 
       {/* Stats Bar */}
-      <section
-        style={{
-          background: 'var(--gradient-section-alt)',
-          borderTop: '1px solid var(--glass-border)',
-          borderBottom: '1px solid var(--glass-border)',
-        }}
-      >
-        <div
-          style={{
-            maxWidth: '1280px',
-            margin: '0 auto',
-            padding: '48px 32px',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '24px',
-          }}
-        >
-          {[
-            { number: '3', label: 'Hari', icon: Calendar, accentColor: '#3B82F6' },
-            { number: '24', label: 'Sesi', icon: Clock, accentColor: '#F59E0B' },
-            { number: '6', label: 'Workshop', icon: Zap, accentColor: '#10B981' },
-            { number: '12+', label: 'Pembicara', icon: Users, accentColor: '#8B5CF6' },
-          ].map((stat, idx) => {
-            const Icon = stat.icon;
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                whileHover={{ scale: 1.05, y: -4 }}
-                className="glass-card-dark group relative overflow-hidden cursor-pointer"
-                style={{
-                  background: 'var(--color-bg-card)',
-                  borderRadius: '16px',
-                  padding: '24px',
-                  border: '1px solid var(--glass-border)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-                }}
-              >
-                {/* Hover accent bar */}
-                <div
-                  className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      <section style={{ background: 'var(--color-bg-primary)', borderBottom: '1px solid var(--glass-border)' }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 py-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { number: '3',   label: 'Hari',       sublabel: 'Acara penuh', icon: Calendar, color: '#3B82F6' },
+              { number: '24',  label: 'Sesi',        sublabel: 'Lintas jalur', icon: Clock,    color: '#F59E0B' },
+              { number: '6',   label: 'Workshop',    sublabel: 'Interaktif',   icon: Zap,      color: '#10B981' },
+              { number: '12+', label: 'Pembicara',   sublabel: 'Nasional & internasional', icon: Users, color: '#8B5CF6' },
+            ].map((stat, idx) => {
+              const Icon = stat.icon;
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: idx * 0.08 }}
+                  whileHover={{ y: -4 }}
+                  className="relative overflow-hidden rounded-2xl p-5 group cursor-default"
                   style={{
-                    background: `linear-gradient(90deg, ${stat.accentColor}, transparent)`,
-                  }}
-                />
-
-                {/* Icon with glow */}
-                <div className="flex items-center gap-3 mb-4">
-                  <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{
-                      background: `${stat.accentColor}20`,
-                      boxShadow: `0 0 16px ${stat.accentColor}25`,
-                    }}
-                  >
-                    <Icon
-                      size={20}
-                      style={{ color: stat.accentColor }}
-                    />
-                  </div>
-                  <span
-                    className="font-bold text-sm px-3 py-1 rounded-lg"
-                    style={{
-                      background: `${stat.accentColor}15`,
-                      color: stat.accentColor,
-                    }}
-                  >
-                    {stat.label}
-                  </span>
-                </div>
-
-                {/* Big number */}
-                <p
-                  style={{
-                    fontSize: '48px',
-                    fontWeight: '900',
-                    lineHeight: '1',
-                    background: `linear-gradient(135deg, ${stat.accentColor}, ${stat.accentColor}bb)`,
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
+                    background: 'var(--color-bg-card)',
+                    border: `1px solid ${stat.color}20`,
+                    boxShadow: `0 4px 24px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.05)`,
                   }}
                 >
-                  {stat.number}
-                </p>
-              </motion.div>
-            );
-          })}
+                  {/* Tinted corner glow */}
+                  <div className="absolute -top-6 -right-6 w-20 h-20 rounded-full pointer-events-none"
+                       style={{ background: stat.color, opacity: 0.06, filter: 'blur(20px)' }} />
+                  {/* Always-visible accent bar */}
+                  <div className="absolute top-0 left-0 w-full h-0.5 rounded-t-2xl"
+                       style={{ background: `linear-gradient(90deg, ${stat.color}, transparent)`, opacity: 0.7 }} />
+
+                  {/* Icon row */}
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                         style={{ background: `${stat.color}15` }}>
+                      <Icon size={18} style={{ color: stat.color }} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-wider" style={{ color: stat.color }}>{stat.label}</p>
+                      <p className="text-[10px]" style={{ color: 'var(--color-text-muted)' }}>{stat.sublabel}</p>
+                    </div>
+                  </div>
+
+                  {/* Number */}
+                  <p className="text-5xl font-black leading-none"
+                     style={{
+                       background: `linear-gradient(135deg, ${stat.color} 0%, ${stat.color}90 100%)`,
+                       WebkitBackgroundClip: 'text',
+                       WebkitTextFillColor: 'transparent',
+                       backgroundClip: 'text',
+                     }}>
+                    {stat.number}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* Day Tabs Section */}
-      <section
-        style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          padding: '48px 32px',
-        }}
-      >
-        <motion.div
-          style={{
-            display: 'flex',
-            gap: '12px',
-            marginBottom: '32px',
-            flexWrap: 'wrap',
-          }}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          {days.map((day, idx) => (
-            <motion.button
-              key={day.id}
-              onClick={() => {
-                setSelectedDay(day.id);
-                setSelectedTrack('Semua');
-              }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: idx * 0.1 }}
-              style={{
-                padding: '14px 28px',
-                borderRadius: '9999px',
-                cursor: 'pointer',
-                fontWeight: '600',
-                fontSize: '15px',
-                transition: 'all 300ms ease',
-                background:
-                  selectedDay === day.id
-                    ? 'linear-gradient(135deg, var(--color-primary), var(--color-primary))'
-                    : 'var(--color-bg-card)',
-                color:
-                  selectedDay === day.id
-                    ? '#FFFFFF'
-                    : 'var(--color-text-secondary)',
-                border:
-                  selectedDay === day.id ? 'none' : '1px solid var(--glass-border)',
-                boxShadow:
-                  selectedDay === day.id
-                    ? '0 8px 20px rgba(var(--color-primary-rgb), 0.3)'
-                    : 'none',
-              }}
-              onMouseEnter={(e) => {
-                const btn = e.currentTarget;
-                if (selectedDay !== day.id) {
-                  btn.style.borderColor = 'var(--color-primary)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                const btn = e.currentTarget;
-                if (selectedDay !== day.id) {
-                  btn.style.borderColor = 'var(--glass-border)';
-                }
-              }}
-            >
-              <div style={{ fontWeight: '700', fontSize: '15px' }}>{day.label}</div>
-              <div style={{ fontSize: '12px', opacity: 0.75, marginTop: '2px' }}>
-                {day.subtitle}
-              </div>
-            </motion.button>
-          ))}
-        </motion.div>
+      {/* Day Tabs + Filter */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-8 pt-14 pb-6">
+        <div className="flex flex-col items-center gap-6">
 
-        {/* Track Filter Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <h3
+          {/* Day Selector — segmented control, centered */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45 }}
+            className="flex gap-2 p-1.5 rounded-2xl flex-wrap justify-center"
             style={{
-              fontSize: '13px',
-              fontWeight: '600',
-              color: 'var(--color-text-secondary)',
-              marginBottom: '16px',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
+              background: 'var(--color-bg-card)',
+              border: '1px solid var(--glass-border)',
+              boxShadow: '0 2px 16px rgba(0,0,0,0.08)',
             }}
           >
-            <Filter size={16} />
-            Filter Jalur
-          </h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-            {(['Semua', 'Keynote', 'Panel', 'Workshop', 'Networking'] as const).map(
-              (track, idx) => {
-                const trackInfo =
-                  track === 'Semua'
-                    ? { hex: '#6366F1', name: 'Semua' }
-                    : { hex: trackColorMap[track].hex, name: track };
-
-                return (
-                  <motion.button
-                    key={track}
-                    onClick={() => setSelectedTrack(track)}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: idx * 0.05 }}
-                    style={{
-                      padding: '8px 16px',
-                      borderRadius: '9999px',
-                      cursor: 'pointer',
-                      fontWeight: '600',
-                      fontSize: '13px',
-                      transition: 'all 200ms ease',
-                      background:
-                        selectedTrack === track
-                          ? `${trackInfo.hex}30`
-                          : 'var(--color-bg-card)',
-                      color:
-                        selectedTrack === track
-                          ? trackInfo.hex
-                          : 'var(--color-text-secondary)',
-                      border:
-                        selectedTrack === track
-                          ? `2px solid ${trackInfo.hex}`
-                          : '1px solid var(--glass-border)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                    }}
-                    onMouseEnter={(e) => {
-                      const btn = e.currentTarget;
-                      if (selectedTrack !== track) {
-                        btn.style.borderColor = trackInfo.hex;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      const btn = e.currentTarget;
-                      if (selectedTrack !== track) {
-                        btn.style.borderColor = 'var(--glass-border)';
-                      }
-                    }}
+            {days.map((day) => {
+              const active = selectedDay === day.id;
+              return (
+                <motion.button
+                  key={day.id}
+                  onClick={() => { setSelectedDay(day.id); setSelectedTrack('Semua'); }}
+                  whileHover={!active ? { scale: 1.02 } : {}}
+                  whileTap={{ scale: 0.97 }}
+                  className="relative px-7 py-3.5 rounded-xl text-center transition-all duration-250 cursor-pointer"
+                  style={{
+                    background: active ? 'var(--color-primary)' : 'transparent',
+                    boxShadow: active ? '0 4px 18px rgba(59,130,246,0.35)' : 'none',
+                    minWidth: '170px',
+                  }}
+                >
+                  <p
+                    className="text-sm font-bold leading-tight"
+                    style={{ color: active ? '#fff' : 'var(--color-text-primary)' }}
                   >
-                    <Dot
-                      size={12}
-                      fill={trackInfo.hex}
-                      color={trackInfo.hex}
-                      style={{ flexShrink: 0 }}
-                    />
-                    {track}
-                  </motion.button>
-                );
-              }
-            )}
-          </div>
-        </motion.div>
+                    {day.label}
+                  </p>
+                  <p
+                    className="text-xs mt-0.5"
+                    style={{ color: active ? 'rgba(255,255,255,0.72)' : 'var(--color-text-muted)' }}
+                  >
+                    {day.subtitle}
+                  </p>
+                </motion.button>
+              );
+            })}
+          </motion.div>
+
+          {/* Divider + Track Filter row, centered */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.12 }}
+            className="flex items-center justify-center gap-2.5 flex-wrap"
+          >
+            {/* Label */}
+            <div
+              className="flex items-center gap-1.5 pr-3"
+              style={{ borderRight: '1px solid var(--glass-border)' }}
+            >
+              <Filter size={12} style={{ color: 'var(--color-text-muted)' }} />
+              <span
+                className="text-[11px] font-bold uppercase tracking-[0.18em]"
+                style={{ color: 'var(--color-text-muted)' }}
+              >
+                Filter Jalur
+              </span>
+            </div>
+
+            {/* Track pills */}
+            {(['Semua', 'Keynote', 'Panel', 'Workshop', 'Networking'] as const).map((track) => {
+              const trackHex = track === 'Semua' ? '#6366F1' : trackColorMap[track].hex;
+              const active = selectedTrack === track;
+              return (
+                <motion.button
+                  key={track}
+                  onClick={() => setSelectedTrack(track)}
+                  whileTap={{ scale: 0.94 }}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer"
+                  style={{
+                    background: active ? `${trackHex}18` : 'transparent',
+                    color: active ? trackHex : 'var(--color-text-secondary)',
+                    border: active
+                      ? `1.5px solid ${trackHex}55`
+                      : '1px solid var(--glass-border)',
+                    boxShadow: active ? `0 2px 10px ${trackHex}22` : 'none',
+                  }}
+                  onMouseEnter={e => {
+                    if (!active) {
+                      e.currentTarget.style.borderColor = `${trackHex}45`;
+                      e.currentTarget.style.color = trackHex;
+                    }
+                  }}
+                  onMouseLeave={e => {
+                    if (!active) {
+                      e.currentTarget.style.borderColor = 'var(--glass-border)';
+                      e.currentTarget.style.color = 'var(--color-text-secondary)';
+                    }
+                  }}
+                >
+                  <span
+                    className="w-1.5 h-1.5 rounded-full shrink-0 transition-opacity"
+                    style={{ background: trackHex, opacity: active ? 1 : 0.45 }}
+                  />
+                  {track}
+                </motion.button>
+              );
+            })}
+          </motion.div>
+
+        </div>
       </section>
 
       {/* Sessions Timeline */}

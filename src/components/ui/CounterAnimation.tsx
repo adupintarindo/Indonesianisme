@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, CSSProperties } from 'react';
 
 interface CounterAnimationProps {
   target: number;
@@ -8,17 +8,19 @@ interface CounterAnimationProps {
   prefix?: string;
   duration?: number;
   className?: string;
+  style?: CSSProperties;
 }
 
 export const CounterAnimation = ({
   target,
   suffix = '',
   prefix = '',
-  duration = 2000,
+  duration = 1600,
   className = '',
+  style,
 }: CounterAnimationProps) => {
   const [count, setCount] = useState(0);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
@@ -31,14 +33,9 @@ export const CounterAnimation = ({
       { threshold: 0.1 }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
+    if (ref.current) observer.observe(ref.current);
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+      if (ref.current) observer.unobserve(ref.current);
     };
   }, [isInView]);
 
@@ -48,39 +45,26 @@ export const CounterAnimation = ({
     let startTime: number | null = null;
     let animationId: number;
 
+    // easeOutExpo for snappy feel
+    const easeOutExpo = (t: number) =>
+      t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+
     const animate = (currentTime: number) => {
-      if (startTime === null) {
-        startTime = currentTime;
-      }
-
+      if (startTime === null) startTime = currentTime;
       const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      const currentCount = Math.floor(progress * target);
-      setCount(currentCount);
-
-      if (progress < 1) {
-        animationId = requestAnimationFrame(animate);
-      }
+      const t = Math.min(elapsed / duration, 1);
+      const eased = easeOutExpo(t);
+      setCount(Math.round(eased * target));
+      if (t < 1) animationId = requestAnimationFrame(animate);
     };
 
     animationId = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
+    return () => { if (animationId) cancelAnimationFrame(animationId); };
   }, [isInView, target, duration]);
 
   return (
-    <div
-      ref={ref}
-      className={`font-jetbrains-mono text-4xl font-bold text-gold ${className}`}
-    >
-      {prefix}
-      {count.toLocaleString()}
-      {suffix}
+    <div ref={ref} className={className} style={style}>
+      {prefix}{count.toLocaleString()}{suffix}
     </div>
   );
 };

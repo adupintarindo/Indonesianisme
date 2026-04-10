@@ -38,6 +38,14 @@
   --color-info: #3B82F6;
 
   /* Gradients */
+  /* Sector/Category Colors */
+  --color-sector-pangan: #34D399;
+  --color-sector-energi: #FBBF24;
+  --color-sector-kesehatan: #FB7185;
+  --color-sector-teknologi: #60A5FA;
+  --color-sector-industri: #A78BFA;
+  --color-sector-infrastruktur: #38BDF8;
+
   --gradient-hero: linear-gradient(135deg, #0B1120 0%, #1E293B 35%, #0F172A 65%, #0B1120 100%);
   --gradient-card: linear-gradient(145deg, rgba(17,24,39,0.8), rgba(31,41,55,0.6));
   --gradient-primary: linear-gradient(135deg, #2563EB, #3B82F6);
@@ -93,16 +101,25 @@
   --color-pearl-white: #0F172A;
   --color-warm-gray: #475569;
   --color-warm-gray-light: #64748B;
-  --color-gold: #2563EB;
-  --color-gold-light: #3B82F6;
-  --color-gold-dark: #1D4ED8;
+  --color-gold: #B45309;
+  --color-gold-light: #D97706;
+  --color-gold-dark: #92400E;
+
+  /* Sector Colors — same in light mode (vibrant enough) */
+  --color-sector-pangan: #059669;
+  --color-sector-energi: #D97706;
+  --color-sector-kesehatan: #E11D48;
+  --color-sector-teknologi: #2563EB;
+  --color-sector-industri: #7C3AED;
+  --color-sector-infrastruktur: #0284C7;
   --color-teal: #0D9488;
   --color-teal-light: #14B8A6;
 }
 
 @theme {
   --color-deep-navy: #0B1120;
-  --color-itb-blue: #1E3A5F;  --color-sky-blue: #3B82F6;
+  --color-itb-blue: #1D4ED8;
+  --color-sky-blue: #60A5FA;
   --color-gold: #D97706;
   --color-gold-light: #F59E0B;
   --color-gold-dark: #B45309;
@@ -313,20 +330,27 @@
   color: #64748B !important;
 }
 [data-theme="light"] .text-gold {
-  color: #2563EB !important;
+  color: #92400E !important;
 }
 [data-theme="light"] .bg-gold {
-  background-color: #2563EB !important;
+  background-color: #B45309 !important;
 }
 [data-theme="light"] .bg-gold\/20,
 [data-theme="light"] [class*="bg-gold/20"] {
-  background-color: rgba(37, 99, 235, 0.2) !important;
+  background-color: rgba(180, 83, 9, 0.15) !important;
 }
 [data-theme="light"] .text-gold-light {
-  color: #3B82F6 !important;
+  color: #B45309 !important;
 }
 [data-theme="light"] .text-gold-dark {
-  color: #1D4ED8 !important;
+  color: #78350F !important;
+}
+[data-theme="light"] .border-gold {
+  border-color: #D97706 !important;
+}
+[data-theme="light"] .border-gold\/20,
+[data-theme="light"] [class*="border-gold/20"] {
+  border-color: rgba(217, 119, 6, 0.25) !important;
 }
 [data-theme="light"] .bg-itb-blue {
   background-color: #1E40AF !important;
@@ -356,7 +380,7 @@
   --tw-gradient-to: #DBEAFE !important;
 }
 [data-theme="light"] .from-gold {
-  --tw-gradient-from: #2563EB !important;
+  --tw-gradient-from: #D97706 !important;
 }
 [data-theme="light"] .to-transparent {
   --tw-gradient-to: transparent !important;

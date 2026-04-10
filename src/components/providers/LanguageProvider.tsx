@@ -5,6 +5,7 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 type Lang = 'ID' | 'EN';
 
 const translations: Record<string, Record<Lang, string>> = {
+  'nav.home': { ID: 'Beranda', EN: 'Home' },
   'nav.about': { ID: 'Tentang', EN: 'About' },
   'nav.event': { ID: 'Event', EN: 'Event' },
   'nav.speakers': { ID: 'Pembicara', EN: 'Speakers' },
@@ -18,6 +19,7 @@ const translations: Record<string, Record<Lang, string>> = {
   'nav.media': { ID: 'Media', EN: 'Media' },
   'nav.calendar': { ID: 'Kalender', EN: 'Calendar' },
   'nav.sponsorship': { ID: 'Sponsorship', EN: 'Sponsorship' },
+  'nav.sertifikat': { ID: 'Sertifikat', EN: 'Certificate' },
   'hero.title': { ID: 'INDONESIANISME 2026', EN: 'INDONESIANISME 2026' },
   'hero.subtitle': { ID: '80 Gagasan untuk 8% Pertumbuhan Ekonomi Indonesia', EN: '80 Ideas for 8% Indonesian Economic Growth' },  'hero.tagline': { ID: 'Reindustrialisasi · Kedaulatan Teknologi · Transformasi Struktural', EN: 'Reindustrialization · Technology Sovereignty · Structural Transformation' },
   'hero.cta': { ID: 'Daftar Sekarang', EN: 'Register Now' },
@@ -36,6 +38,13 @@ const translations: Record<string, Record<Lang, string>> = {
   'pillars.title': { ID: '6 Pilar Strategis', EN: '6 Strategic Pillars' },
   'pillars.all': { ID: 'Jelajahi Semua Topik', EN: 'Explore All Topics' },  'events.title': { ID: 'Jadwal Kegiatan', EN: 'Event Schedule' },
   'events.all': { ID: 'Lihat Kalender Lengkap', EN: 'View Full Calendar' },
+  'venue.tag': { ID: 'Lokasi', EN: 'Venue' },
+  'venue.title': { ID: 'Jakarta Convention Center', EN: 'Jakarta Convention Center' },
+  'venue.subtitle': { ID: 'JCC Senayan, Jakarta Pusat', EN: 'JCC Senayan, Central Jakarta' },
+  'venue.address': { ID: 'Jl. Jenderal Gatot Subroto, Gelora, Tanah Abang, Jakarta Pusat 10270', EN: 'Jl. Jenderal Gatot Subroto, Gelora, Tanah Abang, Central Jakarta 10270' },
+  'venue.capacity': { ID: '5.000+ Kursi', EN: '5,000+ Seats' },
+  'venue.access': { ID: 'Mudah Diakses dari Seluruh Jakarta', EN: 'Easily Accessible from Across Jakarta' },
+  'venue.directions': { ID: 'Petunjuk Arah', EN: 'Get Directions' },
   'partners.title': { ID: 'Mitra Strategis', EN: 'Strategic Partners' },
   'partners.cta': { ID: 'Jadilah Mitra', EN: 'Become a Partner' },
   'newsletter.title': { ID: 'Bergabung dengan Gerakan Indonesianisme', EN: 'Join the Indonesianisme Movement' },

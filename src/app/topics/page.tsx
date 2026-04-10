@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { HeroBG } from '@/components/shared/HeroBG';
 import {
   Shield,
   Cpu,
@@ -470,33 +471,7 @@ export default function TopicsPage() {
     <div style={{ background: 'var(--color-bg-primary)' }}>
       {/* Hero Section with gradient mesh background */}
       <section className="relative px-4 md:px-8 py-20 md:py-32 overflow-hidden">
-        {/* Animated gradient background mesh */}
-        <div className="absolute inset-0 opacity-30">
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 45, 0],
-            }}
-            transition={{ duration: 20, repeat: Infinity }}
-            className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, var(--color-primary), transparent)',
-              opacity: 0.2,
-            }}
-          />
-          <motion.div
-            animate={{
-              scale: [1.2, 1, 1.2],
-              rotate: [45, 0, 45],
-            }}
-            transition={{ duration: 25, repeat: Infinity }}
-            className="absolute bottom-0 right-0 w-96 h-96 rounded-full blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, #00838F, transparent)',
-              opacity: 0.2,
-            }}
-          />
-        </div>
+        <HeroBG variant="blue" />
 
         <div className="relative z-10 max-w-6xl mx-auto text-center">
           <motion.h1

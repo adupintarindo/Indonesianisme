@@ -2,58 +2,56 @@
 
 import { motion } from 'framer-motion';
 import React from 'react';
+import { HeroBG } from './HeroBG';
 
 interface PageHeroProps {
   title: string;
   subtitle?: string;
-  backgroundImage?: string;
   children?: React.ReactNode;
+  variant?: 'default' | 'blue' | 'purple' | 'amber' | 'dark';
+  minHeight?: string;
+  photoPlaceholder?: boolean;
 }
 
 export const PageHero = ({
   title,
   subtitle,
-  backgroundImage,
   children,
+  variant = 'default',
+  minHeight = '52vh',
+  photoPlaceholder = false,
 }: PageHeroProps) => {
   return (
     <div
-      className="relative w-full min-h-screen md:min-h-[60vh] flex items-center justify-center overflow-hidden"
-      style={
-        backgroundImage
-          ? {
-              backgroundImage: `url(${backgroundImage})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }
-          : undefined
-      }
+      className="relative w-full flex items-center justify-center overflow-hidden"
+      style={{ minHeight }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-deep-navy/80 to-deep-navy/95" />
+      <HeroBG variant={variant} photoPlaceholder={photoPlaceholder} />
 
       {/* Content */}
       <motion.div
-        className="relative z-10 text-center px-4 md:px-8 max-w-4xl"
-        initial={{ opacity: 0, y: 30 }}
+        className="relative z-10 text-center px-4 md:px-8 max-w-4xl py-20 md:py-28"
+        initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.7 }}
       >
         <motion.h1
-          className="text-4xl md:text-6xl font-bold text-pearl-white mb-6 leading-tight"
-          initial={{ opacity: 0, y: 20 }}
+          className="text-4xl md:text-6xl font-bold mb-5 leading-tight"
+          style={{ color: (variant === 'dark' || photoPlaceholder) ? '#f1f5f9' : 'var(--color-text-primary)' }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
+          transition={{ duration: 0.7, delay: 0.08 }}
         >
           {title}
         </motion.h1>
 
         {subtitle && (
           <motion.p
-            className="text-lg md:text-xl text-sky-blue mb-8 leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto"
+            style={{ color: (variant === 'dark' || photoPlaceholder) ? 'rgba(148,163,184,0.9)' : 'var(--color-text-secondary)' }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.18 }}
           >
             {subtitle}
           </motion.p>

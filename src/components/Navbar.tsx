@@ -3,31 +3,44 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
-  Menu, X, Sun, Moon, Globe, ChevronDown,
-  Info, Calendar, Users, LayoutGrid, BookOpen,
-  Image, MessageCircle, Ticket, Handshake, HelpCircle
+  Menu, X, Sun, Moon,
+  Home, Info, Calendar, Users, LayoutGrid, BookOpen,
+  Image, MessageCircle, Ticket, Handshake, HelpCircle, Award, Newspaper
 } from 'lucide-react';
 import { useTheme } from './providers/ThemeProvider';
 import { useLang } from './providers/LanguageProvider';
 
+const LANGUAGES = [
+  { code: 'ID', label: 'Indonesia', flag: '🇮🇩' },
+  { code: 'EN', label: 'English', flag: '🇬🇧' },
+] as const;
+
 const menuItems = [
+  { key: 'nav.home', href: '/', icon: Home },
   { key: 'nav.about', href: '/about', icon: Info },
   { key: 'nav.event', href: '/event', icon: Calendar },
   { key: 'nav.speakers', href: '/speakers', icon: Users },
   { key: 'nav.program', href: '/program', icon: LayoutGrid },
   { key: 'nav.topics', href: '/topics', icon: BookOpen },
+  { key: 'nav.media', href: '/media', icon: Newspaper },
   { key: 'nav.register', href: '/register', icon: Ticket },
   { key: 'nav.sponsorship', href: '/sponsorship', icon: Handshake },
   { key: 'nav.gallery', href: '/gallery', icon: Image },
   { key: 'nav.community', href: '/community', icon: MessageCircle },
   { key: 'nav.faq', href: '/faq', icon: HelpCircle },
+  { key: 'nav.sertifikat', href: '/sertifikat', icon: Award },
 ];
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { lang, setLang, t } = useLang();
+  const pathname = usePathname();
+
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(href + '/');
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -69,23 +82,35 @@ export const Navbar = () => {
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center gap-1">
-              {menuItems.slice(0, 7).map((item) => (
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  className="px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 no-underline hover:no-underline"
-                  style={{ color: 'var(--color-text-secondary)' }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'var(--color-primary-light)';
-                    e.currentTarget.style.background = 'var(--color-bg-card)';
-                  }}                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'var(--color-text-secondary)';
-                    e.currentTarget.style.background = 'transparent';
-                  }}
-                >
-                  {t(item.key)}
-                </Link>
-              ))}
+              {menuItems.slice(0, 7).map((item) => {
+                const active = isActive(item.href);
+                return (
+                  <Link
+                    key={item.key}
+                    href={item.href}
+                    className="px-3 py-2 rounded-lg text-sm transition-all duration-200 no-underline hover:no-underline"
+                    style={{
+                      color: active ? 'var(--color-primary-light)' : 'var(--color-text-secondary)',
+                      background: active ? 'rgba(59,130,246,0.10)' : 'transparent',
+                      fontWeight: active ? '700' : '500',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!active) {
+                        e.currentTarget.style.color = 'var(--color-primary-light)';
+                        e.currentTarget.style.background = 'var(--color-bg-card)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!active) {
+                        e.currentTarget.style.color = 'var(--color-text-secondary)';
+                        e.currentTarget.style.background = 'transparent';
+                      }
+                    }}
+                  >
+                    {t(item.key)}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Right Controls */}
@@ -100,28 +125,25 @@ export const Navbar = () => {
                 {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
               </button>
 
-              {/* Language Toggle */}
-              <div className="hidden sm:flex items-center rounded-lg overflow-hidden"
-                   style={{ background: 'var(--color-bg-card)', border: '1px solid var(--glass-border)' }}>
-                <button
-                  onClick={() => setLang('ID')}
-                  className="px-3 py-1.5 text-xs font-bold transition-all duration-200"
-                  style={{
-                    background: lang === 'ID' ? 'var(--color-primary-light)' : 'transparent',
-                    color: lang === 'ID' ? '#0A1628' : 'var(--color-text-secondary)',
-                  }}
-                >
-                  ID
-                </button>                <button
-                  onClick={() => setLang('EN')}
-                  className="px-3 py-1.5 text-xs font-bold transition-all duration-200"
-                  style={{
-                    background: lang === 'EN' ? 'var(--color-primary-light)' : 'transparent',
-                    color: lang === 'EN' ? '#0A1628' : 'var(--color-text-secondary)',
-                  }}
-                >
-                  EN
-                </button>
+              {/* Language Toggle — segmented pill */}
+              <div
+                className="hidden sm:flex rounded-lg overflow-hidden"
+                style={{ border: '1px solid var(--glass-border)', background: 'var(--color-bg-card)' }}
+              >
+                {LANGUAGES.map(l => (
+                  <button
+                    key={l.code}
+                    onClick={() => setLang(l.code)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold transition-all duration-200"
+                    style={{
+                      background: lang === l.code ? 'var(--color-primary)' : 'transparent',
+                      color: lang === l.code ? '#ffffff' : 'var(--color-text-secondary)',
+                    }}
+                  >
+                    <span className="text-sm leading-none">{l.flag}</span>
+                    {l.code}
+                  </button>
+                ))}
               </div>
 
               {/* CTA */}
@@ -171,6 +193,7 @@ export const Navbar = () => {
                 <div className="space-y-1">
                   {menuItems.map((item, index) => {
                     const Icon = item.icon;
+                    const active = isActive(item.href);
                     return (
                       <motion.div
                         key={item.key}
@@ -181,18 +204,30 @@ export const Navbar = () => {
                         <Link
                           href={item.href}
                           onClick={() => setIsOpen(false)}
-                          className="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-all no-underline hover:no-underline"
-                          style={{ color: 'var(--color-text-secondary)' }}
+                          className="flex items-center gap-3 px-4 py-3 rounded-xl text-base transition-all no-underline hover:no-underline"
+                          style={{
+                            color: active ? 'var(--color-primary-light)' : 'var(--color-text-secondary)',
+                            background: active ? 'rgba(59,130,246,0.10)' : 'transparent',
+                            fontWeight: active ? '700' : '500',
+                            borderLeft: active ? '3px solid var(--color-primary-light)' : '3px solid transparent',
+                          }}
                           onMouseEnter={(e) => {
-                            e.currentTarget.style.background = 'var(--color-bg-card)';
-                            e.currentTarget.style.color = 'var(--color-primary-light)';
+                            if (!active) {
+                              e.currentTarget.style.background = 'var(--color-bg-card)';
+                              e.currentTarget.style.color = 'var(--color-primary-light)';
+                            }
                           }}
                           onMouseLeave={(e) => {
-                            e.currentTarget.style.background = 'transparent';
-                            e.currentTarget.style.color = 'var(--color-text-secondary)';
+                            if (!active) {
+                              e.currentTarget.style.background = 'transparent';
+                              e.currentTarget.style.color = 'var(--color-text-secondary)';
+                            }
                           }}
                         >
-                          <Icon className="w-5 h-5" />
+                          <Icon
+                            className="w-5 h-5 shrink-0"
+                            style={{ color: active ? 'var(--color-primary-light)' : undefined }}
+                          />
                           {t(item.key)}
                         </Link>
                       </motion.div>
@@ -211,26 +246,20 @@ export const Navbar = () => {
                       {theme === 'dark' ? t('theme.light') : t('theme.dark')}
                     </button>
                     <div className="flex rounded-xl overflow-hidden" style={{ border: '1px solid var(--glass-border)' }}>
-                      <button
-                        onClick={() => setLang('ID')}
-                        className="px-4 py-3 text-sm font-bold"
-                        style={{
-                          background: lang === 'ID' ? 'var(--color-primary-light)' : 'var(--color-bg-card)',
-                          color: lang === 'ID' ? '#0A1628' : 'var(--color-text-secondary)',
-                        }}
-                      >
-                        ID
-                      </button>
-                      <button
-                        onClick={() => setLang('EN')}
-                        className="px-4 py-3 text-sm font-bold"
-                        style={{
-                          background: lang === 'EN' ? 'var(--color-primary-light)' : 'var(--color-bg-card)',
-                          color: lang === 'EN' ? '#0A1628' : 'var(--color-text-secondary)',
-                        }}
-                      >
-                        EN
-                      </button>
+                      {LANGUAGES.map(l => (
+                        <button
+                          key={l.code}
+                          onClick={() => setLang(l.code)}
+                          className="flex items-center gap-1.5 px-4 py-3 text-sm font-bold"
+                          style={{
+                            background: lang === l.code ? 'var(--color-primary-light)' : 'var(--color-bg-card)',
+                            color: lang === l.code ? '#0A1628' : 'var(--color-text-secondary)',
+                          }}
+                        >
+                          <span className="text-base leading-none">{l.flag}</span>
+                          {l.code}
+                        </button>
+                      ))}
                     </div>
                   </div>                  <Link
                     href="/register"

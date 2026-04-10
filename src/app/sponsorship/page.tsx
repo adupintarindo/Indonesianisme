@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { HeroBG } from '@/components/shared/HeroBG';
 import { motion } from 'framer-motion';
 import {
   Trophy,
@@ -503,18 +504,7 @@ export default function SponsorshipPage() {
     >
       {/* Hero Section */}
       <section className="relative px-4 md:px-8 py-20 md:py-32 overflow-hidden">
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'var(--gradient-hero)',
-            opacity: 0.3,
-          }}
-        />
-
-        {/* Floating Decorative Elements */}
-        <FloatingElement delay={0} x="10%" y="20%" sizeIndex={0} />
-        <FloatingElement delay={1} x="80%" y="10%" sizeIndex={1} />
-        <FloatingElement delay={2} x="20%" y="70%" sizeIndex={2} />
+        <HeroBG variant="amber" />
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div

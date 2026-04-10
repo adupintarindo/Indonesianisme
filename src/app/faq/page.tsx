@@ -1,8 +1,10 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, MessageCircle, Mail } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { MessageCircle, Mail } from 'lucide-react';
 import { useState } from 'react';
+import { HeroBG } from '@/components/shared/HeroBG';
+import { Accordion } from '@/components/ui/Accordion';
 
 type FAQItem = {
   category: string;
@@ -85,26 +87,14 @@ const faqItems: FAQItem[] = [
 
 const categories = ['Umum', 'Pendaftaran', 'Pembayaran', 'Hari-H'];
 
-type ExpandedCategory = {
-  [key: string]: boolean;
-};
-
 export default function FAQPage() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [expandedItems, setExpandedItems] = useState<ExpandedCategory>({});
 
   const filtered = faqItems.filter(
     item =>
       item.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.answer.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  const toggleExpand = (key: string) => {
-    setExpandedItems(prev => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
 
   const grouped = categories.reduce((acc, cat) => {
     acc[cat] = filtered.filter(item => item.category === cat);
@@ -114,8 +104,9 @@ export default function FAQPage() {
   return (
     <div className="w-full min-h-screen bg-deep-navy">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 bg-gradient-to-b from-deep-navy to-deep-navy/80">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative min-h-[45vh] flex items-center justify-center overflow-hidden py-20 md:py-32">
+        <HeroBG variant="dark" />
+        <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -178,56 +169,7 @@ export default function FAQPage() {
                   {cat}
                 </h2>
 
-                <div className="space-y-4">
-                  <AnimatePresence mode="wait">
-                    {items.map((item, idx) => {
-                      const itemKey = `${cat}-${idx}`;
-                      const isExpanded = expandedItems[itemKey];
-
-                      return (
-                        <motion.div
-                          key={itemKey}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.3 }}
-                          className="glass-card-dark overflow-hidden"
-                        >
-                          <button
-                            onClick={() => toggleExpand(itemKey)}
-                            className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-white/5 transition-all"
-                          >
-                            <span className="font-plus-jakarta font-bold text-pearl-white">
-                              {item.question}
-                            </span>
-                            <motion.div
-                              animate={{ rotate: isExpanded ? 180 : 0 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              <ChevronDown className="w-5 h-5 text-gold" />
-                            </motion.div>
-                          </button>
-
-                          <AnimatePresence>
-                            {isExpanded && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="border-t border-gold/10"
-                              >
-                                <p className="px-6 py-4 text-warm-gray-light leading-relaxed">
-                                  {item.answer}
-                                </p>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </motion.div>
-                      );
-                    })}
-                  </AnimatePresence>
-                </div>
+                <Accordion items={items} allowMultiple />
               </motion.div>
             );
           })}

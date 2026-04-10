@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { useState } from 'react';
+import { HeroBG } from '@/components/shared/HeroBG';
 
 type MediaItem = {
   id: number;
@@ -67,8 +68,9 @@ export default function GalleryPage() {
   return (
     <div className="w-full min-h-screen bg-deep-navy">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 bg-gradient-to-b from-deep-navy to-deep-navy/80">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative min-h-[45vh] flex items-center justify-center overflow-hidden py-20 md:py-32">
+        <HeroBG variant="default" />
+        <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
