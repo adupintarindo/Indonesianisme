@@ -3798,6 +3798,131 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ═══════ TESTIMONIALS ═══════ */}
+      <section className="section-padding" style={{ background: 'var(--color-bg-secondary)' }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-14"
+          >
+            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: 'var(--color-primary)' }}>
+              {lang === 'ID' ? 'SUARA PARA PEMIMPIN' : 'VOICES OF LEADERS'}
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: 'var(--color-text-primary)' }}>
+              {lang === 'ID' ? 'Apa Kata Mereka' : 'What They Say'}
+            </h2>
+            <p className="max-w-xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
+              {lang === 'ID'
+                ? 'Perspektif akademisi, industri, dan pemerintah tentang Indonesianisme 2026'
+                : 'Perspectives from academia, industry, and government on Indonesianisme 2026'}
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                quote: 'Indonesianisme 2026 adalah momentum paling tepat untuk mempercepat reindustrialisasi. IA-ITB mampu menjembatani gagasan akademis dengan kebijakan nyata yang berdampak.',
+                name: 'Prof. Dr. Bambang Riyanto',
+                title: 'Guru Besar Teknik Industri, ITB',
+                img: 'https://picsum.photos/seed/testimony-1/80/80',
+                accent: '#3B82F6',
+              },
+              {
+                quote: 'Forum ini membuktikan alumni ITB tidak hanya bicara di menara gading — mereka turun tangan merumuskan solusi konkret untuk pertumbuhan 8%.',
+                name: 'Ir. Dewi Kartika Sari',
+                title: 'Direktur Utama, PT Energi Nusantara',
+                img: 'https://picsum.photos/seed/testimony-2/80/80',
+                accent: '#10B981',
+              },
+              {
+                quote: 'Hilirisasi mineral bukan sekadar isu ekonomi — ini soal kedaulatan nasional. Sangat mengapresiasi pendekatan 80 gagasan yang terstruktur dan berbasis data.',
+                name: 'Dr. Fajar Kusuma, M.Sc.',
+                title: 'Deputi Bidang Industri, Kementerian ESDM',
+                img: 'https://picsum.photos/seed/testimony-3/80/80',
+                accent: '#F59E0B',
+              },
+              {
+                quote: 'Transformasi digital tanpa fondasi SDM yang kuat hanya akan menjadi slogan. Indonesianisme 2026 menjawab ini dengan roadmap yang holistik dan actionable.',
+                name: 'Sarah Amelia Putri',
+                title: 'Co-Founder & CEO, TechNusa Digital',
+                img: 'https://picsum.photos/seed/testimony-4/80/80',
+                accent: '#8B5CF6',
+              },
+              {
+                quote: 'Ketahanan pangan adalah pertahanan nasional garis pertama. Sangat mengapresiasi Indonesianisme yang menempatkan kedaulatan pangan sebagai prioritas utama.',
+                name: 'Dr. Ahmad Rifai, M.P.',
+                title: 'Peneliti Senior, Badan Riset Pangan Nasional',
+                img: 'https://picsum.photos/seed/testimony-5/80/80',
+                accent: '#EC4899',
+              },
+              {
+                quote: 'IA-ITB menunjukkan bahwa komunitas alumni bisa menjadi katalis perubahan kebijakan. Indonesianisme adalah model kolaborasi akademisi-industri-pemerintah yang patut dicontoh.',
+                name: 'Prof. Ir. Hendra Wibisono',
+                title: 'Rektor, Universitas Teknologi Bandung',
+                img: 'https://picsum.photos/seed/testimony-6/80/80',
+                accent: '#14B8A6',
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.5 }}
+                className="rounded-2xl p-6 flex flex-col"
+                style={{
+                  background: 'var(--color-bg-card)',
+                  border: '1px solid var(--glass-border)',
+                  boxShadow: '0 2px 16px rgba(0,0,0,0.05)',
+                }}
+              >
+                {/* Quote mark */}
+                <div className="text-5xl font-black leading-none mb-4 select-none" style={{ color: item.accent, opacity: 0.25 }}>
+                  &ldquo;
+                </div>
+
+                {/* Quote text */}
+                <p className="text-sm leading-relaxed flex-1 italic" style={{ color: 'var(--color-text-secondary)' }}>
+                  {item.quote}
+                </p>
+
+                {/* Author */}
+                <div
+                  className="flex items-center gap-3 mt-6 pt-5"
+                  style={{ borderTop: '1px solid var(--glass-border)' }}
+                >
+                  <div
+                    className="w-10 h-10 rounded-full overflow-hidden shrink-0"
+                    style={{ border: `2px solid ${item.accent}30` }}
+                  >
+                    <Image
+                      src={item.img}
+                      alt={item.name}
+                      width={40}
+                      height={40}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold leading-tight" style={{ color: 'var(--color-text-primary)' }}>
+                      {item.name}
+                    </p>
+                    <p className="text-xs leading-snug" style={{ color: 'var(--color-text-muted)' }}>
+                      {item.title}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
       {/* ═══════ NEWSLETTER CTA ═══════ */}
       <section className="section-padding relative overflow-hidden" style={{ background: 'var(--gradient-section-alt)' }}>
         <div className="absolute inset-0 pointer-events-none">
